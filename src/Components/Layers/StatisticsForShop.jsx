@@ -150,6 +150,46 @@ const chartConfigLine = {
     },
 };
 
+
+// pie chart
+
+const productCategoriesData = {
+    series: [12000, 8000, 5000, 10000],  // Kategoriyalar bo'yicha daromadlar
+    options: {
+        chart: {
+            type: 'pie', // Pie chart
+        },
+        labels: ['Clothes', 'Food', 'Accessories', 'Electronics'],  // Kategoriyalar nomlari
+        title: {
+            text: "Product Categories Revenue",  // Pie chartning sarlavhasi
+            align: 'center',
+            style: {
+                fontSize: '16px',
+                color: '#fff',
+            },
+        },
+        tooltip: {
+            theme: 'dark',  // Tooltipning rangini o'zgartirish
+        },
+        responsive: [
+            {
+                breakpoint: 480,
+                options: {
+                    chart: {
+                        width: '100%',
+                    },
+                    legend: {
+                        position: 'bottom',
+                    },
+                },
+            },
+        ],
+        legend: {
+            position: 'bottom',  // Legend pastda bo'ladi
+        },
+    },
+};
+
 function ratingFunction(rating = 3.5) {
     // Calculate the number of full stars and half stars based on the rating
     const fullStars = Math.floor(rating); // Full stars (integer part)
@@ -255,68 +295,75 @@ export default function StatisticsForShop() {
             <div className="bestselled bg-gray-600 rounded-lg" style={{ width: "60%", height: "310px", padding: "10px", transform: "translateY(130px)" }}>
                 <h4 className='text-white' style={{ fontSize: "20px" }}>Top selled products</h4>
                 <div className="bestselled-cards" style={{ display: "flex", alignItems: "center", justifyContent: "center", columnGap: "10px" }}>
-                    <div className="card-group" style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                    <div className="best-card bg-gray-400 rounded-lg">
-                        <img src="https://picsum.photos/100/100" alt=""  />
-                        <div className="texts">
-                            <span className="product-name text-white" style={{textAlign:"start", fontWeight:"600", fontSize:"20px"}}>All in One group</span>
-                            <span className="desc text-gray-300" style={{fontSize:"12px"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                    <div className="card-group" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div className="best-card bg-gray-400 rounded-lg">
+                            <img src="https://picsum.photos/100/100" alt="" />
+                            <div className="texts">
+                                <span className="product-name text-white" style={{ textAlign: "start", fontWeight: "600", fontSize: "20px" }}>All in One group</span>
+                                <span className="desc text-gray-300" style={{ fontSize: "12px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                            </div>
+                        </div>
+
+                        <div className="infos bg-gray-500 rounded-lg" >
+                            <span><b>Total sold:</b> 1203</span>
+                            <span><b>Total income:</b> 769 $</span>
+                            <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{ fontSize: "17px" }}></i></span>
+
+                            <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
                         </div>
                     </div>
 
-                    <div className="infos bg-gray-500 rounded-lg" >
-                        <span><b>Total sold:</b> 1203</span>
-                        <span><b>Total income:</b> 769 $</span>
-                        <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{fontSize:"17px"}}></i></span>
-
-                        <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
-                    </div>
-                    </div>
 
 
+                    <div className="card-group" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div className="best-card bg-gray-400 rounded-lg">
+                            <img src="https://picsum.photos/100/100" alt="" />
+                            <div className="texts">
+                                <span className="product-name text-white" style={{ textAlign: "start", fontWeight: "600", fontSize: "20px" }}>All in One group</span>
+                                <span className="desc text-gray-300" style={{ fontSize: "12px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                            </div>
+                        </div>
 
-                    <div className="card-group" style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                    <div className="best-card bg-gray-400 rounded-lg">
-                        <img src="https://picsum.photos/100/100" alt=""  />
-                        <div className="texts">
-                            <span className="product-name text-white" style={{textAlign:"start", fontWeight:"600", fontSize:"20px"}}>All in One group</span>
-                            <span className="desc text-gray-300" style={{fontSize:"12px"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                        <div className="infos bg-gray-500 rounded-lg" >
+                            <span><b>Total sold:</b> 1203</span>
+                            <span><b>Total income:</b> 769 $</span>
+                            <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{ fontSize: "17px" }}></i></span>
+
+                            <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
                         </div>
                     </div>
 
-                    <div className="infos bg-gray-500 rounded-lg" >
-                        <span><b>Total sold:</b> 1203</span>
-                        <span><b>Total income:</b> 769 $</span>
-                        <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{fontSize:"17px"}}></i></span>
-
-                        <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
-                    </div>
-                    </div>
 
 
+                    <div className="card-group" style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                        <div className="best-card bg-gray-400 rounded-lg">
+                            <img src="https://picsum.photos/100/100" alt="" />
+                            <div className="texts">
+                                <span className="product-name text-white" style={{ textAlign: "start", fontWeight: "600", fontSize: "20px" }}>All in One group</span>
+                                <span className="desc text-gray-300" style={{ fontSize: "12px" }}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                            </div>
+                        </div>
 
-                    <div className="card-group" style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                    <div className="best-card bg-gray-400 rounded-lg">
-                        <img src="https://picsum.photos/100/100" alt=""  />
-                        <div className="texts">
-                            <span className="product-name text-white" style={{textAlign:"start", fontWeight:"600", fontSize:"20px"}}>All in One group</span>
-                            <span className="desc text-gray-300" style={{fontSize:"12px"}}>Lorem ipsum dolor sit amet consectetur adipisicing elit...</span>
+                        <div className="infos bg-gray-500 rounded-lg" >
+                            <span><b>Total sold:</b> 1203</span>
+                            <span><b>Total income:</b> 769 $</span>
+                            <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{ fontSize: "17px" }}></i></span>
+
+                            <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
                         </div>
                     </div>
 
-                    <div className="infos bg-gray-500 rounded-lg" >
-                        <span><b>Total sold:</b> 1203</span>
-                        <span><b>Total income:</b> 769 $</span>
-                        <span><b>Total rating:</b> 4 <i className="fas fa-star" style={{fontSize:"17px"}}></i></span>
-
-                        <button className='bg-blue-300 text-white py-2 px-12 rounded-md absolute bottom-5'>View in shop</button>
-                    </div>
-                    </div>
-                    
                 </div>
             </div>
-            
-            
+
+            <div data-aos="fade-left" className="pie-chart absolute" style={{top:"150px", right:"150px", transform:"scale(1.4)", width:"max-content"}}>
+                <div className="error absolute top-0 left-0" style={{width:"100%", height:"100%", display:"flex", alignItems:"center", justifyContent:"center", zIndex:"999", textAlign:"center", backdropFilter:"blur(10px)"}}>
+                    <span className='text-white'>This type of statistics is not available for single category.</span>
+                </div>
+                <Chart options={productCategoriesData.options} series={productCategoriesData.series} type="pie" height={280} />
+
+            </div>
+
 
         </div>
     );
