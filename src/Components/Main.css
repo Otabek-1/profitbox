@@ -5,7 +5,6 @@
     align-items: center;
     display: flex;
     justify-content: center;
-    overflow: hidden;
 }
 
 .menu-items {
@@ -18,10 +17,244 @@
 }
 
 .menu-item {
+    user-select: none;
     padding: 15px;
     display: flex;
     align-items: center;
     justify-content: flex-start;
     gap: 10px;
     cursor: pointer;
+    position: relative;
+    transition: .5s;
+}
+
+.menu-item:hover {
+    transform: scale(1.1);
+}
+
+.tools {
+    width: 100%;
+    height: 100%;
+}
+
+.business-card {
+    width: 100%;
+    min-height: 300px;
+    max-height: 300px;
+    height: 100%;
+    background: #344;
+    padding: 20px 10px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+    animation: bsa 1s;
+}
+
+@keyframes bsa {
+    0% {
+        transform: translateX(100px);
+        opacity: 0;
+    }
+
+    100% {
+        transform: translateX(0px);
+        opacity: 1;
+    }
+}
+
+.business-title {
+    font-size: 55px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+.column {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    z-index: 99;
+}
+
+.column i {
+    font-size: 30px;
+    color: white;
+}
+
+.card-back {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    object-fit: cover;
+}
+
+.curtn {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+}
+
+.c {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    background: linear-gradient(to top, black, rgba(255, 255, 255, 0));
+}
+
+.dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: white;
+}
+
+.card-button {
+    text-decoration: none;
+    font-size: 20px;
+    padding: 15px 35px;
+    background: white;
+    color: black;
+    border-radius: 50px;
+    transition: .5s;
+    border: 2px solid white;
+}
+
+.card-button:hover {
+    color: white;
+    background: transparent;
+}
+
+.create-card {
+    width: 100%;
+    min-height: 300px;
+    max-height: 300px;
+    height: 100%;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    border: 2px dotted gray;
+}
+
+.plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: gray;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    user-select: none;
+}
+
+.plus i {
+    color: white;
+}
+
+.card-link-c {
+    color: white;
+    text-decoration: underline;
+}
+
+.statistics {
+    width: 100%;
+    height: 100%;
+    padding: 20px;
+}
+
+#works {
+    background: transparent;
+    /* Make the background of the select transparent */
+    font-size: 25px;
+    color: white;
+    opacity: .8;
+    outline: none;
+    border: unset;
+    padding: 8px;
+    /* Optional: to ensure the select is not too small */
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+#works option {
+    background: black;
+    /* Transparent background for options */
+    color: white;
+    /* White text for better contrast */
+    font-size: 20px;
+    padding: 10px 30px;
+    border-radius: 10px;
+}
+
+#works option:hover {
+    background: rgba(255, 255, 255, 0.2);
+    /* Slight hover effect */
+}
+
+#works:focus {
+    outline: none;
+    /* Remove outline on focus */
+}
+
+.best-card{
+    width: 230px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.best-card img{
+    width: 100%;
+    height: 55%;
+    object-fit: cover;
+}
+
+.texts{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    padding: 10px;
+}
+
+.infos{
+    width: 0px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    overflow: hidden;
+    transform: translateX(-10px);
+    /* padding: 10px 10px 10px 25px; */
+    row-gap: 10px;
+    overflow: hidden;
+    transition: .5s;
+    filter: blur(10px);
+}
+
+.infos span{
+    color: white;
+    font-size: 17px;
+}
+
+.card-group:hover .infos{
+    width: 230px;
+    padding: 10px 10px 10px 25px;
+    filter: blur(0px);
 }

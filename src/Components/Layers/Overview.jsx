@@ -18,7 +18,7 @@ export default function Overview() {
                     <div className="c"></div>
                 </div>
                 <div className="column" data-aos="fade-left">
-                    <h3 className="business-title text-white">Shop store</h3>
+                    <h3 className="business-title text-white">Shop store | Online shop store</h3>
                     <i className="fas fa-store" data-aos="fade-left"></i>
                 </div>
 
@@ -51,7 +51,7 @@ export default function Overview() {
                     <div className="c"></div>
                 </div>
                 <div className="column" data-aos="fade-left">
-                    <h3 className="business-title text-white">MedCom</h3>
+                    <h3 className="business-title text-white">MedCom | Consulting center</h3>
                     <i className="fas fa-headset" data-aos="fade-left"></i>
                 </div>
 
@@ -84,7 +84,7 @@ export default function Overview() {
                     <div className="c"></div>
                 </div>
                 <div className="column" data-aos="fade-left">
-                    <h3 className="business-title text-white">Bull Trade</h3>
+                    <h3 className="business-title text-white">Bull Trade | Education center</h3>
                     <i className="fas fa-user-graduate" data-aos="fade-left"></i>
                 </div>
 
