@@ -5,7 +5,9 @@ import "../index.css"
 import video from "../resources/hero-back.mp4"
 import { Link } from 'react-router-dom';
 
+
 const Landing = () => {
+
   useEffect(() => {
     Aos.init({
       duration: 1000, // Animatsiya davomiyligi (ms)

@@ -64,46 +64,17 @@ export default function Dashboard() {
         {/* Content area */}
         <div className="tools">
           {/* Wrap content with ThemeProvider */}
-          <ThemeProvider>
+
             {menu === "overview" ? <Overview /> :
               menu === "statistics" ? <Statistics /> :
                 menu === "settings" ? <Settings /> :
                   menu === "plan" ? <Plan /> :
                     null}
-          </ThemeProvider>
+
         </div>
       </main>
 
-      {/* LogOut Confirmation Modal */}
-      <Dialog
-        open={open}
-        handler={handleOpen}
-        animate={{
-          mount: { scale: 1, y: 0 },
-          unmount: { scale: 0.9, y: -100 },
-        }}
-      >
-        <DialogHeader>Confirm Logout</DialogHeader>
-        <DialogBody>
-          Are you sure you want to log out? All unsaved progress will be lost.
-        </DialogBody>
-        <DialogFooter>
-          <Button
-            variant="text"
-            color="red"
-            onClick={handleOpen}
-            className="mr-1"
-          >
-            <span>Cancel</span>
-          </Button>
-          <Button variant="gradient" color="green" onClick={() => {
-            handleOpen();
-            // You can implement the actual logout logic here
-          }}>
-            <span>Confirm</span>
-          </Button>
-        </DialogFooter>
-      </Dialog>
+    
     </div>
   );
 }
