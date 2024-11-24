@@ -1,5 +1,7 @@
 import React, { useEffect, useContext } from 'react'
 import StatisticsForShop from './StatisticsForShop'
+import StatisticsForLanding from './StatisticsForLanding'
+import StatisticsForEducation from './StatisticsForEducation'
 
 export default function Statistics() {
   return (
@@ -14,8 +16,10 @@ export default function Statistics() {
         </select>
       </div>
 
-      <div className="column">
-        <StatisticsForShop />
+      <div className="column" >
+        {/* <StatisticsForShop/> */}
+        {/* <StatisticsForLanding /> */}
+        <StatisticsForEducation />
       </div>
     </div>
   )

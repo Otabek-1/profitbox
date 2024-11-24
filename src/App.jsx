@@ -5,6 +5,7 @@ import Login from './Components/Login';
 import CreateAccount from './Components/CreateAccount';
 import Dashboard from './Components/Dashboard';
 import { ThemeProvider } from './ThemeContext';
+import AddBusiness from './Components/Layers/AddBusiness';
 
 const App = () => {
     return (
@@ -15,6 +16,7 @@ const App = () => {
                     <Route path="/login" element={<Login />} />
                     <Route path="/signup" element={<CreateAccount />} />
                     <Route path='/dashboard' element={<Dashboard />} />
+                    <Route path='/add-business' element={<AddBusiness />} />
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

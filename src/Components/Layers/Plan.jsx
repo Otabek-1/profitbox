@@ -2,92 +2,90 @@ import Aos from 'aos';
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const TABLE_HEAD = ["Features", "Simple (current)", "Pro", "Full"];
-const TABLE_ROWS = [
-    { name: "Maximal create business cluster", job: "3", date: "7", full: "10" },
-    { name: "Coollaboration duration", job: "None", date: "1 month", full: "Forever" },
-    { name: "Maximum product in shop", job: "15", date: "30", full: "Unlimited" },
-    { name: "Maximum categories", job: "3", date: "5", full: "10" },
-    { name: "Advertices", job: "Not allowed", date: "Max: 5", full: "Max: 15" },
-    { name: "Advertices duration", job: "Not allowed", date: "5 days", full: "2 weeks" },
-    { name: "Price", job: "Free", date: "12 $", full: "20 $" },
+const PLANS = [
+    {
+        title: "Simple (current)",
+        price: "Free",
+        features: [
+            "Max: 3 clusters",
+            "No collaboration",
+            "15 products",
+            "3 categories",
+            "No advertisements",
+        ],
+        color: "from-green-400 to-blue-500",
+    },
+    {
+        title: "Pro",
+        price: "$12",
+        features: [
+            "Max: 7 clusters",
+            "1 month collaboration",
+            "30 products",
+            "5 categories",
+            "Max: 5 advertisements, 5 days",
+        ],
+        color: "from-purple-500 to-pink-500",
+    },
+    {
+        title: "Full",
+        price: "$20",
+        features: [
+            "Max: 10 clusters",
+            "Forever collaboration",
+            "Unlimited products",
+            "10 categories",
+            "Max: 15 advertisements, 2 weeks",
+        ],
+        color: "from-yellow-400 to-orange-500",
+    },
 ];
 
 const Plan = () => {
     useEffect(() => {
         Aos.init({
-          duration: 1000, // Animatsiya davomiyligi (ms)
-          easing: 'ease-in-out', // Animatsiya xarakteri
-          once: true, // Sahifada faqat bir marta bajariladi
+            duration: 1000,
+            easing: 'ease-in-out',
+            once: true,
         });
-      }, []);
+    }, []);
+
     return (
-        <div className="w-full h-full flex justify-center p-5">
-            <div className="overflow-x-auto w-full" data-aos="fade-left">
-                <table className="min-w-full table-auto text-left bg-white border-collapse border border-gray-300 shadow-lg">
-                    {/* Table Header */}
-                    <thead className="bg-gray-100 rounded-lg">
-                        <tr>
-                            {TABLE_HEAD.map((head) => (
-                                <th
-                                    key={head}
-                                    className="px-4 py-2 border-b text-sm font-semibold text-gray-700"
-                                >
-                                    {head}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
-
-                    {/* Table Body */}
-                    <tbody>
-                        {TABLE_ROWS.map((row, index) => {
-                            const { name, job, date, full } = row;
-                            const isLast = index === TABLE_ROWS.length - 1;
-                            const rowClasses = isLast ? "p-4" : "p-4 border-b border-gray-200";
-
-                            return (
-                                <tr key={name} className="hover:bg-gray-700 bg-gray-800">
-                                    <td className={rowClasses}>
-                                        <span className="text-sm font-medium text-white">{name}</span>
-                                    </td>
-                                    <td className={rowClasses}>
-                                        <span className="text-sm text-white">{job}</span>
-                                    </td>
-                                    <td className={rowClasses}>
-                                        <span className="text-sm text-white">{date}</span>
-                                    </td>
-                                    <td className={rowClasses}>
-                                        <span className="text-sm text-white">{full}</span>
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                       
-                    </tbody>
-                </table>
-                <div className="buttons flex items-center py-5" style={{background:"transparent", justifyContent:"end", paddingRight:"200px", columnGap:"200px"}}>
-                            <Link
-                                to="/login"
-                                className="inline-block bg-gray-600 hover:border-2 border-gray-700 text-white hover:bg-transparent  hover:border-gray-700 dark:bg-green-800 dark:text-gray-300 dark:hover:bg-green-600 py-3 px-8 rounded-lg text-lg font-semibold transition-colors"
-                                style={{marginRight:"150px"}}
-                            >
-                                Buy
-                            </Link>
-                            <Link
-                                to="/login"
-                                className="inline-block bg-gray-600 hover:border-2 border-gray-700 text-white hover:bg-transparent  hover:border-gray-700 dark:bg-green-800 dark:text-gray-300 dark:hover:bg-green-600 py-3 px-8 rounded-lg text-lg font-semibold transition-colors"
-                            >
-                                Buy
-                            </Link>
-                            <Link
-                                to="/login"
-                                className="inline-block bg-gray-600 hover:border-2 border-gray-700 text-white hover:bg-transparent  hover:border-gray-700 dark:bg-green-800 dark:text-gray-300 dark:hover:bg-green-600 py-3 px-8 rounded-lg text-lg font-semibold transition-colors"
-                            >
-                                Buy
-                            </Link>
-
+        <div className="flex flex-col items-center py-10 bg-gray-900 min-h-screen">
+            <h1 className="text-4xl font-bold text-white mb-8" data-aos="fade-down">
+                Choose Your Plan
+            </h1>
+            <div
+                className="grid grid-cols-1 md:grid-cols-3 gap-6 px-5"
+                data-aos="fade-up"
+            >
+                {PLANS.map((plan, index) => (
+                    <div
+                        key={index}
+                        className={`flex flex-col items-center p-6 bg-gradient-to-br ${plan.color} rounded-3xl shadow-xl transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl`}
+                    >
+                        <h2 className="text-2xl font-extrabold text-white mb-4">
+                            {plan.title}
+                        </h2>
+                        <div className="text-4xl font-bold text-white mb-4">
+                            {plan.price}
                         </div>
+                        <ul className="text-white text-sm space-y-2 mb-6">
+                            {plan.features.map((feature, idx) => (
+                                <li key={idx} className="flex items-center space-x-2">
+                                    <span className="text-green-300">✓</span>
+                                    <span>{feature}</span>
+                                </li>
+                            ))}
+                        </ul>
+                        <Link
+                            to="/login"
+                            className="px-6 py-3 bg-white text-gray-900 font-semibold rounded-full shadow-lg transition-all duration-300 transform hover:bg-gray-100 hover:-translate-y-1 hover:shadow-xl"
+                        >
+                            Choose Plan
+                        </Link>
+                    </div>
+                ))}
             </div>
         </div>
     );

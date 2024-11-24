@@ -14,6 +14,7 @@ export default function CreateAccount() {
   const [phoneNumber, setPhoneNumber] = useState('');
   const [agreement, setAgreement] = useState(false);
   const [uname, setUname] = useState('');
+  const [err, setErr] = useState('');
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -37,12 +38,13 @@ export default function CreateAccount() {
       .then(response => {
         console.log(response.data);
         alert('Account created successfully!');
+        window.localStorage.setItem('access', response.data.accessid)
         nav("/dashboard");
       })
       .catch(error => {
-        console.error('Error creating account:', error);
-        alert('An error occurred while creating your account');
-        console.log(userData);
+        const e = error.response;
+        const m = e['data'];
+        setErr(m['message']);
       });
   };
 
@@ -200,8 +202,8 @@ export default function CreateAccount() {
           >
             Create Account
           </button>
-          <span className='text-red-600 py-3' style={{textAlign:"center", width:"100%"}}>Error occured!</span>
-          </form>
+          {err.length > 0 ? <span className='text-red-600 py-3' style={{ textAlign: "center", width: "100%" }}>{err}</span> : null}
+        </form>
       </div>
     </div>
   );
