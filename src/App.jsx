@@ -6,6 +6,8 @@ import CreateAccount from './Components/CreateAccount';
 import Dashboard from './Components/Dashboard';
 import { ThemeProvider } from './ThemeContext';
 import AddBusiness from './Components/Layers/AddBusiness';
+import Shop from './Components/edits/Shop';
+import Forgotpassword from './Components/Forgot-password';
 
 const App = () => {
     return (
@@ -17,6 +19,8 @@ const App = () => {
                     <Route path="/signup" element={<CreateAccount />} />
                     <Route path='/dashboard' element={<Dashboard />} />
                     <Route path='/add-business' element={<AddBusiness />} />
+                    <Route path='/shop/:id' element={<Shop />} />
+                    <Route path='/forgot-password' element={<Forgotpassword />} />
                 </Routes>
             </BrowserRouter>
         </ThemeProvider>

@@ -15,27 +15,35 @@ import Settings from './Layers/Settings';
 import Plan from './Layers/Plan';
 import { ThemeProvider } from '@material-tailwind/react'; // Importing ThemeProvider
 import axios from "axios";
+import News from "./Layers/News";
 
 export default function Dashboard() {
   const [menu, setMenu] = useState("overview");
   const [open, setOpen] = useState(false);
   const [user, setUser] = useState({});
 
-  const data={
-    acc: window.localStorage.getItem("access")
-  }
-  useEffect(()=>{
-    axios.get('http://localhost:4000', data)
-    .then(res=>{
-      setUser(res.data[0])
-    })
-    .catch(err=>{
-      console.log(err);
-    })
-  },[])
-  console.log(user);
-  
-  
+  const data = {
+    acc: window.localStorage.getItem("access"),
+  };
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:4000/getuser', {
+        headers: {
+          'Content-Type': 'application/json', // content type qo'shildi
+        },
+        params: data, // data 'params' sifatida yuboriladi
+      })
+      .then((res) => {
+        setUser(res.data[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+
+
   const handleOpen = () => setOpen(!open); // Toggle the modal state
 
   return (
@@ -46,7 +54,7 @@ export default function Dashboard() {
         <Link className="text-white flex items-center" style={{ columnGap: "10px", userSelect: "none" }}>
           <img src="https://picsum.photos/50/50" alt="" className='rounded-full' style={{ objectFit: "cover", width: "45px", height: "45px" }} />
           <div className="descs">
-            <h5 className="name" >{user.firstname +" "+ user.lastname}</h5>
+            <h5 className="name" >{user.firstname + " " + user.lastname}</h5>
             <p style={{ fontSize: "11px" }}>Business manager</p>
           </div>
         </Link>
@@ -60,6 +68,9 @@ export default function Dashboard() {
 
           {/* Iconlar va menyular */}
           <ul className="menu-items text-white">
+            <li className="menu-item" onClick={() => { setMenu("news") }}>
+              <i className="fas fa-globe"></i>
+            </li>
             <li className="menu-item" onClick={() => { setMenu("overview") }}>
               <i className="fas fa-table"></i>
             </li>
@@ -79,19 +90,21 @@ export default function Dashboard() {
         </div>
 
         {/* Content area */}
-        <div className="tools" style={{paddingTop:"50px", paddingBottom:"150px", overflow:"scroll"}}>
+        <div className="tools" style={{ paddingTop: "50px", paddingBottom: "150px", overflow: "scroll" }}>
           {/* Wrap content with ThemeProvider */}
 
-            {menu === "overview" ? <Overview /> :
-              menu === "statistics" ? <Statistics /> :
-                menu === "settings" ? <Settings /> :
-                  menu === "plan" ? <Plan /> :
+          {menu === "overview" ? <Overview /> :
+            menu === "statistics" ? <Statistics /> :
+              menu === "settings" ? <Settings /> :
+                menu === "plan" ? <Plan /> :
+                  menu === "news" ? <News /> :
                     null}
 
         </div>
+        
       </main>
 
-    
+     
     </div>
   );
 }

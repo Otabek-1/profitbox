@@ -50,7 +50,7 @@ export default function CreateAccount() {
 
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-900">
+    <div className="flex justify-center items-center min-h-screen bg-gray-900 overflow-scroll">
       <div className="bg-gray-800 p-8 rounded-lg shadow-lg w-1/3">
         <h2 className="text-3xl font-semibold text-center text-white mb-6">
           Create Your Account with Us!

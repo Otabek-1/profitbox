@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export default function CreateLandingPage() {
   // Form state
@@ -10,6 +11,8 @@ export default function CreateLandingPage() {
   
   // Modal visibility state
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const nav = useNavigate(null);
 
   // Form submit handler
   const handleSubmit = (e) => {
@@ -55,6 +58,7 @@ export default function CreateLandingPage() {
       setContactEmail('');
       setPhone('');
       setSocialLink('');
+      nav("/dashboard")
     }
     setIsModalOpen(false);
   };

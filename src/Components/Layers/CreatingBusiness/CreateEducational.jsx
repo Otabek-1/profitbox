@@ -1,175 +1,157 @@
+import axios from 'axios';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-export default function CreateEducational() {
-  // Form state
+export default function CreateEducational(data) {
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-  const [contactEmail, setContactEmail] = useState('');
-  const [phone, setPhone] = useState('');
+  const [categories, setCategories] = useState('');
   const [socialLink, setSocialLink] = useState('');
-  
-  // Modal visibility state
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // Form submit handler
-  const handleSubmit = (e) => {
+  const edu_name = data.name || "Educational Center Name"; // Fallback value
+  const owner = window.localStorage.getItem('access');
+  const nav = useNavigate();
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const educationalCenterData = {
-      description,
-      image,
-      contactEmail,
-      phone,
-      socialLink,
-    };
+    const formData = new FormData();
+    formData.append('center_name', edu_name);
+    formData.append('center_owner', owner);
+    formData.append('edu_picture', image); 
+    formData.append('edu_desc', description);
+    formData.append('categories', categories);
 
-    console.log('Educational Center Data:', educationalCenterData);
+    try {
+      const response = await axios.post('http://localhost:4000/addedu', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      console.log('Educational Center created:', response.data);
+      nav('/dashboard'); 
+    } catch (error) {
+      console.error('Error creating educational center:', error.response || error);
+    }
 
-    // Reset form (optional)
     setDescription('');
     setImage(null);
-    setContactEmail('');
-    setPhone('');
+    setCategories('');
     setSocialLink('');
   };
 
-  // Handle image upload
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file)); // Preview the image
-    }
+    if (file) setImage(file);
   };
 
-  // Handle cancel click to open modal
   const handleCancel = () => {
     setIsModalOpen(true);
   };
 
-  // Handle modal confirmation (Cancel action)
   const handleModalClose = (confirm) => {
     if (confirm) {
-      // Reset form if confirmed
       setDescription('');
       setImage(null);
-      setContactEmail('');
-      setPhone('');
-      setSocialLink('');
+      setCategories('');
+      nav('/dashboard');
     }
     setIsModalOpen(false);
   };
 
   return (
     <div className="p-6 bg-gray-800 rounded-xl shadow-xl max-w-lg mx-auto">
-      <h2 className="text-2xl font-semibold text-white mb-6 text-center">Educational Center Yaratish</h2>
+      <h2 className="text-2xl font-semibold text-white mb-6 text-center">
+        Educational Center Yaratish
+      </h2>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Description */}
         <div>
           <label htmlFor="description" className="text-white">Ta'rif</label>
           <textarea
             id="description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
+            className="w-full p-3 bg-gray-700 text-white rounded-md"
             rows="4"
             placeholder="Ta'lim markazi haqida qisqacha ma'lumot..."
             required
           />
         </div>
 
-        {/* Main Image Upload */}
         <div>
           <label htmlFor="image" className="text-white">Markazning Rasm</label>
           <input
             type="file"
             id="image"
             onChange={handleImageChange}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
+            className="w-full p-3 bg-gray-700 text-white rounded-md"
             accept="image/*"
             required
           />
-          {image && (
-            <div className="mt-4">
-              <img src={image} alt="Educational Center" className="w-48 h-48 object-cover rounded-md" />
-            </div>
-          )}
-        </div>
-
-        {/* Contact Information */}
-        <div>
-          <label htmlFor="contactEmail" className="text-white">Bog'lanish Email</label>
-          <input
-            type="email"
-            id="contactEmail"
-            value={contactEmail}
-            onChange={(e) => setContactEmail(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            placeholder="Masalan: example@education.com"
-            required
-          />
+          {image && <p className="mt-2 text-white">Fayl: {image.name}</p>}
         </div>
 
         <div>
-          <label htmlFor="phone" className="text-white">Telefon raqam</label>
-          <input
-            type="text"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            placeholder="Masalan: +998 99 123 45 67"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="socialLink" className="text-white">Ijtimoiy tarmoq havolasi</label>
+          <label htmlFor="socialLink" className="text-white">Ijtimoiy Tarmoq</label>
           <input
             type="text"
             id="socialLink"
             value={socialLink}
             onChange={(e) => setSocialLink(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            placeholder="Masalan: https://facebook.com/educationcenter"
+            className="w-full p-3 bg-gray-700 text-white rounded-md"
+            placeholder="Masalan: https://facebook.com/edu"
+          />
+        </div>
+
+        <div>
+          <label htmlFor="categories" className="text-white">Kategoriyalar</label>
+          <input
+            type="text"
+            id="categories"
+            value={categories}
+            onChange={(e) => setCategories(e.target.value)}
+            className="w-full p-3 bg-gray-700 text-white rounded-md"
+            placeholder="Math, Physics, Chemistry..."
             required
           />
         </div>
 
-        {/* Submit and Cancel Buttons */}
         <div className="flex justify-between">
           <button
             type="submit"
-            className="w-1/2 p-3 bg-green-500 text-white rounded-md hover:bg-green-600 focus:outline-none"
+            className="w-1/2 p-3 bg-green-500 text-white rounded-md hover:bg-green-600"
           >
-            Educational Center Yaratish
+            Yaratish
           </button>
           <button
             type="button"
             onClick={handleCancel}
-            className="w-1/2 p-3 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none"
+            className="w-1/2 p-3 bg-red-500 text-white rounded-md hover:bg-red-600"
           >
-            Cancel
+            Bekor Qilish
           </button>
         </div>
       </form>
 
-      {/* Modal for Cancel Confirmation */}
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full">
-            <h3 className="text-lg font-semibold text-center">Are you sure?</h3>
-            <div className="mt-4 text-center">
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+          <div className="bg-white p-4 rounded shadow-xl max-w-sm w-full">
+            <h3 className="text-lg font-semibold text-center">
+              Ishonchingiz komilmi?
+            </h3>
+            <div className="flex justify-around mt-4">
               <button
                 onClick={() => handleModalClose(true)}
-                className="px-4 py-2 bg-green-500 text-white rounded-md mr-2"
+                className="px-4 py-2 bg-green-500 text-white rounded-md"
               >
-                Yes
+                Ha
               </button>
               <button
                 onClick={() => handleModalClose(false)}
                 className="px-4 py-2 bg-red-500 text-white rounded-md"
               >
-                No
+                Yo'q
               </button>
             </div>
           </div>

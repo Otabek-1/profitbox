@@ -1,73 +1,68 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import Aos from 'aos';
 
-export default function CreateBusinessForShop() {
-  // Form state
+export default function CreateBusinessForShop(data) {
+  useEffect(() => {
+    Aos.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: true,
+    });
+}, []);
+
   const [productType, setProductType] = useState('');
   const [description, setDescription] = useState('');
   const [image, setImage] = useState(null);
-  const [gmail, setGmail] = useState('');
-  const [phone, setPhone] = useState('');
   const [telegram, setTelegram] = useState('');
-  
-  // Modal visibility state
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: '', type: '' });
+  const nav = useNavigate();
+  const business_name = data.name[0];
+  const owner = window.localStorage.getItem('access');
 
-  // Form submit handler
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    const shopData = {
-      productType,
-      description,
-      image,
-      gmail,
-      phone,
-      telegram,
-    };
-
-    console.log('Shop Data:', shopData);
-
-    // Reset form (optional)
-    setProductType('');
-    setDescription('');
-    setImage(null);
-    setGmail('');
-    setPhone('');
-    setTelegram('');
-  };
-
-  // Handle image upload
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setImage(URL.createObjectURL(file)); // Preview the image
+    const formData = new FormData();
+    formData.append('shopname', business_name);
+    formData.append('shopowner', owner);
+    formData.append('shop_desc', description);
+    formData.append('categories', productType);
+    if (image) {
+      formData.append('shop_picture', image);
     }
-  };
 
-  // Handle cancel click to open modal
-  const handleCancel = () => {
-    setIsModalOpen(true);
-  };
-
-  // Handle modal confirmation (Cancel action)
-  const handleModalClose = (confirm) => {
-    if (confirm) {
-      // Reset form if confirmed
-      setProductType('');
-      setDescription('');
-      setImage(null);
-      setGmail('');
-      setPhone('');
-      setTelegram('');
-    }
-    setIsModalOpen(false);
+    axios
+      .post('http://localhost:4000/addShop', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+      .then((res) => {
+        setNotification({ show: true, message: 'Do’kon muvaffaqiyatli qo‘shildi!', type: 'success' });
+        setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000); // 3 sekundda yo‘qoladi
+      })
+      .catch((err) => {
+        setNotification({ show: true, message: 'Xatolik yuz berdi! Iltimos, qaytadan urinib ko‘ring.', type: 'error' });
+        setTimeout(() => setNotification({ show: false, message: '', type: '' }), 3000);
+      });
   };
 
   return (
     <div className="p-6 bg-gray-800 rounded-xl shadow-xl max-w-lg mx-auto">
       <h2 className="text-2xl font-semibold text-white mb-6 text-center">Online Do'kon Ochish</h2>
+      
+      {/* Bildirishnoma */}
+      {notification.show && (
+        <div
+          data-aos = "fade-up"
+          className={`p-4 mb-4 text-white rounded-md ${
+            notification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+          }`}
+        >
+          {notification.message}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Product Type */}
         <div>
           <label htmlFor="productType" className="text-white">Nimalar sotiladi?</label>
           <input
@@ -80,8 +75,6 @@ export default function CreateBusinessForShop() {
             required
           />
         </div>
-
-        {/* Description */}
         <div>
           <label htmlFor="description" className="text-white">Ta'rif</label>
           <textarea
@@ -94,52 +87,17 @@ export default function CreateBusinessForShop() {
             required
           />
         </div>
-
-        {/* Main Image Upload */}
         <div>
           <label htmlFor="image" className="text-white">Do'kon rasmi</label>
           <input
             type="file"
             id="image"
-            onChange={handleImageChange}
+            onChange={(e) => setImage(e.target.files[0])}
             className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
             accept="image/*"
             required
           />
-          {image && (
-            <div className="mt-4">
-              <img src={image} alt="Shop" className="w-48 h-48 object-cover rounded-md" />
-            </div>
-          )}
         </div>
-
-        {/* Contact Information */}
-        <div>
-          <label htmlFor="gmail" className="text-white">Gmail</label>
-          <input
-            type="email"
-            id="gmail"
-            value={gmail}
-            onChange={(e) => setGmail(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            placeholder="Masalan: example@gmail.com"
-            required
-          />
-        </div>
-
-        <div>
-          <label htmlFor="phone" className="text-white">Telefon raqam</label>
-          <input
-            type="text"
-            id="phone"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="w-full p-3 bg-gray-700 text-white rounded-md focus:outline-none"
-            placeholder="Masalan: +998 99 123 45 67"
-            required
-          />
-        </div>
-
         <div>
           <label htmlFor="telegram" className="text-white">Telegram Nickname</label>
           <input
@@ -152,8 +110,6 @@ export default function CreateBusinessForShop() {
             required
           />
         </div>
-
-        {/* Submit and Cancel Buttons */}
         <div className="flex justify-between">
           <button
             type="submit"
@@ -163,36 +119,13 @@ export default function CreateBusinessForShop() {
           </button>
           <button
             type="button"
-            onClick={handleCancel}
+            onClick={() => nav('/dashboard')}
             className="w-1/2 p-3 bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none"
           >
             Cancel
           </button>
         </div>
       </form>
-
-      {/* Modal for Cancel Confirmation */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
-          <div className="bg-white p-6 rounded-xl shadow-xl max-w-sm w-full">
-            <h3 className="text-lg font-semibold text-center">Are you sure?</h3>
-            <div className="mt-4 text-center">
-              <button
-                onClick={() => handleModalClose(true)}
-                className="px-4 py-2 bg-green-500 text-white rounded-md mr-2"
-              >
-                Yes
-              </button>
-              <button
-                onClick={() => handleModalClose(false)}
-                className="px-4 py-2 bg-red-500 text-white rounded-md"
-              >
-                No
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }
